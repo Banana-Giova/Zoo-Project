@@ -68,9 +68,15 @@ class Animal:
         self.height = height
         self.width = width
         self.preferred_habitat = preferred_habitat
-        self.health:float = round(100*(1/age), 3)
         self.fence = None
-        self.area = height*width
+        try:
+            self.health:float = round(100*(1/age), 3)
+        except Exception:
+            self.health:float = 0.0
+        try:
+            self.area = height*width
+        except Exception:
+            self.area = 0
 
     def __str__(self) -> str:
         return f"Animal(name={self.name}, "\
@@ -164,7 +170,7 @@ class ZooKeeper:
     def clean(self, fence:Fence) -> float:
         
         time_clean:float = 0.0
-        if fence.area == 0:
+        if fence.area == 0 or fence.area == None:
             return fence.area
         else:
             time_clean = round((fence.og_area - fence.area)\
